@@ -3,72 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeoPanel AI SmartFarm</title>
+  <title>Holoboard SmartFarm</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 
-<body class="bg-[#0a0f1a] text-white font-sans overflow-x-hidden">
+<body class="bg-gradient-to-b from-[#020617] to-[#0f172a] text-white font-sans overflow-x-hidden relative">
+
+  <!-- Hologram Particles -->
+  <div class="holo-particles"></div>
 
   <!-- Header -->
-  <header class="flex justify-between items-center p-5 bg-gradient-to-r from-purple-800 to-indigo-900 shadow-2xl">
-    <h1 class="text-3xl font-bold tracking-wide text-neon">NeoPanel AI 🌐</h1>
-    <p id="status" class="text-gray-300 text-sm">🔴 Tidak Terhubung</p>
+  <header class="text-center mt-6">
+    <h1 class="text-4xl font-bold text-holo mb-2">🪩 HOLOBOARD SMARTFARM</h1>
+    <p id="status" class="text-cyan-400 text-sm tracking-wide">🔴 Tidak Terhubung ke Broker</p>
   </header>
 
-  <!-- Sensor Data -->
-  <section class="flex flex-wrap justify-center gap-6 mt-8">
-    <div class="ai-card">
-      <h3>🌡️ Suhu Udara</h3>
-      <p><span id="temperature" class="ai-value">--</span> °C</p>
-    </div>
-    <div class="ai-card">
-      <h3>💧 Kelembapan Udara</h3>
-      <p><span id="humidity" class="ai-value">--</span> %</p>
-    </div>
-    <div class="ai-card">
-      <h3>🌱 Kelembapan Tanah</h3>
-      <p><span id="soil" class="ai-value">--</span> %</p>
-    </div>
-    <div class="ai-card">
-      <h3>⚙️ Status Pompa</h3>
-      <p><span id="pumpStatus" class="ai-value text-red-500">OFF</span></p>
-    </div>
+  <!-- Sensor Cards -->
+  <section class="flex flex-wrap justify-center gap-6 p-6 holo-container mt-10">
+    <div class="holo-card"><h3>🌡️ Suhu</h3><p><span id="temperature" class="holo-value">--</span> °C</p></div>
+    <div class="holo-card"><h3>💧 Kelembapan Udara</h3><p><span id="humidity" class="holo-value">--</span> %</p></div>
+    <div class="holo-card"><h3>🌱 Kelembapan Tanah</h3><p><span id="soil" class="holo-value">--</span> %</p></div>
+    <div class="holo-card"><h3>⚙️ Status Pompa</h3><p><span id="pumpStatus" class="holo-value text-red-400">OFF</span></p></div>
   </section>
 
-  <!-- AI Panel -->
-  <section class="ai-panel mt-10">
-    <h2 class="text-2xl font-semibold text-neon mb-2">🤖 Neo AI Assistant</h2>
-    <p id="aiMessage" class="text-gray-300 italic">Menganalisis kondisi lingkungan...</p>
-    <div class="ai-pulse mt-4 mx-auto"></div>
+  <!-- AI Adaptive Panel -->
+  <section class="ai-panel mt-8">
+    <h2 class="text-2xl font-semibold text-holo mb-2">🤖 AI Adaptive Mode</h2>
+    <p id="aiMessage" class="text-cyan-200 italic">Menganalisis kondisi lingkungan dalam format holografik...</p>
+    <div class="holo-core mt-4 mx-auto"></div>
   </section>
 
   <!-- Kontrol -->
   <section class="control-panel mt-10">
-    <h2 class="text-xl font-semibold mb-4">⚡ Kontrol Sistem</h2>
+    <h2 class="text-xl font-semibold mb-3 text-holo">🎛️ Kontrol Sistem</h2>
     <div class="flex justify-center gap-4">
       <button id="manualBtn" class="mode-btn active">Manual</button>
-      <button id="autoBtn" class="mode-btn">AI Auto</button>
+      <button id="autoBtn" class="mode-btn">AI Mode</button>
     </div>
 
-    <div class="flex justify-center gap-4 mt-4">
-      <button id="pumpOnBtn" class="action-btn bg-green-600 hover:bg-green-700">💧 Pompa ON</button>
+    <div class="flex justify-center gap-4 mt-5">
+      <button id="pumpOnBtn" class="action-btn bg-cyan-600 hover:bg-cyan-700">💧 Pompa ON</button>
       <button id="pumpOffBtn" class="action-btn bg-red-600 hover:bg-red-700">🛑 Pompa OFF</button>
     </div>
   </section>
 
   <!-- Grafik -->
   <section class="charts-container">
-    <h2 class="text-2xl font-semibold text-neon mb-4">📊 Sensor Analytics</h2>
+    <h2 class="text-2xl font-semibold text-holo mb-4">📊 Sensor Visualization</h2>
     <canvas id="tempChart"></canvas>
     <canvas id="humChart" class="mt-6"></canvas>
     <canvas id="soilChart" class="mt-6"></canvas>
   </section>
 
-  <footer class="text-center py-5 mt-10 text-gray-400 border-t border-gray-700">
-    <p>© 2025 NeoPanel AI | SmartFarm Powered by EMQX + IoT MQTT</p>
+  <!-- Footer -->
+  <footer class="text-center text-cyan-400 py-6 mt-10 text-sm">
+    <p>© 2025 HOLOBOARD SmartFarm | Powered by EMQX + AI Adaptive Control</p>
   </footer>
 
   <script src="script.js"></script>
