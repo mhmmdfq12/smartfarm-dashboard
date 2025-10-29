@@ -3,49 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoSense SmartFarm Dashboard</title>
+  <title>NeoPanel AI SmartFarm</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 
-<body class="bg-green-50 text-gray-800 font-sans">
+<body class="bg-[#0a0f1a] text-white font-sans overflow-x-hidden">
 
   <!-- Header -->
-  <header class="bg-green-700 text-white py-4 shadow-md">
-    <h1 class="text-3xl font-semibold tracking-wide">🌿 EcoSense SmartFarm Dashboard</h1>
-    <p id="status" class="mt-2 text-green-200">🔴 Tidak Terhubung</p>
+  <header class="flex justify-between items-center p-5 bg-gradient-to-r from-purple-800 to-indigo-900 shadow-2xl">
+    <h1 class="text-3xl font-bold tracking-wide text-neon">NeoPanel AI 🌐</h1>
+    <p id="status" class="text-gray-300 text-sm">🔴 Tidak Terhubung</p>
   </header>
 
-  <!-- Sensor Cards -->
-  <section class="flex flex-wrap justify-center gap-6 p-6">
-    <div class="sensor-card">
-      <h3>Suhu Udara</h3>
-      <p><span id="temperature" class="sensor-value">--</span> °C</p>
+  <!-- Sensor Data -->
+  <section class="flex flex-wrap justify-center gap-6 mt-8">
+    <div class="ai-card">
+      <h3>🌡️ Suhu Udara</h3>
+      <p><span id="temperature" class="ai-value">--</span> °C</p>
     </div>
-    <div class="sensor-card">
-      <h3>Kelembapan Udara</h3>
-      <p><span id="humidity" class="sensor-value">--</span> %</p>
+    <div class="ai-card">
+      <h3>💧 Kelembapan Udara</h3>
+      <p><span id="humidity" class="ai-value">--</span> %</p>
     </div>
-    <div class="sensor-card">
-      <h3>Kelembapan Tanah</h3>
-      <p><span id="soil" class="sensor-value">--</span> %</p>
+    <div class="ai-card">
+      <h3>🌱 Kelembapan Tanah</h3>
+      <p><span id="soil" class="ai-value">--</span> %</p>
     </div>
-    <div class="sensor-card">
-      <h3>Status Pompa</h3>
-      <p><span id="pumpStatus" class="sensor-value text-red-600">OFF 🛑</span></p>
+    <div class="ai-card">
+      <h3>⚙️ Status Pompa</h3>
+      <p><span id="pumpStatus" class="ai-value text-red-500">OFF</span></p>
     </div>
   </section>
 
-  <!-- Kontrol Pompa -->
-  <section class="control-panel">
-    <h2 class="text-2xl font-semibold mb-3">Kontrol Pompa</h2>
-    <p class="mb-4">Mode saat ini: <span id="mode" class="font-bold text-green-700">Manual</span></p>
+  <!-- AI Panel -->
+  <section class="ai-panel mt-10">
+    <h2 class="text-2xl font-semibold text-neon mb-2">🤖 Neo AI Assistant</h2>
+    <p id="aiMessage" class="text-gray-300 italic">Menganalisis kondisi lingkungan...</p>
+    <div class="ai-pulse mt-4 mx-auto"></div>
+  </section>
 
+  <!-- Kontrol -->
+  <section class="control-panel mt-10">
+    <h2 class="text-xl font-semibold mb-4">⚡ Kontrol Sistem</h2>
     <div class="flex justify-center gap-4">
-      <button id="manualBtn" class="control-btn active">Manual</button>
-      <button id="autoBtn" class="control-btn">Otomatis</button>
+      <button id="manualBtn" class="mode-btn active">Manual</button>
+      <button id="autoBtn" class="mode-btn">AI Auto</button>
     </div>
 
     <div class="flex justify-center gap-4 mt-4">
@@ -54,17 +59,16 @@
     </div>
   </section>
 
-  <!-- Grafik Sensor -->
+  <!-- Grafik -->
   <section class="charts-container">
-    <h2 class="text-2xl font-semibold mb-3 text-green-700">Grafik Sensor</h2>
+    <h2 class="text-2xl font-semibold text-neon mb-4">📊 Sensor Analytics</h2>
     <canvas id="tempChart"></canvas>
     <canvas id="humChart" class="mt-6"></canvas>
     <canvas id="soilChart" class="mt-6"></canvas>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-green-700 text-green-100 py-4 mt-10">
-    <p>© 2025 EcoSense SmartFarm | Powered by MQTT & EMQX</p>
+  <footer class="text-center py-5 mt-10 text-gray-400 border-t border-gray-700">
+    <p>© 2025 NeoPanel AI | SmartFarm Powered by EMQX + IoT MQTT</p>
   </footer>
 
   <script src="script.js"></script>
