@@ -1,59 +1,70 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Farming Dashboard v3</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoSense SmartFarm Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
-<body>
-  <header>
-    <h1>🌾 Smart Farming Dashboard v3</h1>
-    <p>Status koneksi: <span id="status">🔴 Terputus</span></p>
+
+<body class="bg-green-50 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-green-700 text-white py-4 shadow-md">
+    <h1 class="text-3xl font-semibold tracking-wide">🌿 EcoSense SmartFarm Dashboard</h1>
+    <p id="status" class="mt-2 text-green-200">🔴 Tidak Terhubung</p>
   </header>
 
-  <section class="cards">
-    <div class="card">
+  <!-- Sensor Cards -->
+  <section class="flex flex-wrap justify-center gap-6 p-6">
+    <div class="sensor-card">
       <h3>Suhu Udara</h3>
-      <p><span id="temperature">--</span> °C</p>
+      <p><span id="temperature" class="sensor-value">--</span> °C</p>
     </div>
-    <div class="card">
+    <div class="sensor-card">
       <h3>Kelembapan Udara</h3>
-      <p><span id="humidity">--</span> %</p>
+      <p><span id="humidity" class="sensor-value">--</span> %</p>
     </div>
-    <div class="card">
+    <div class="sensor-card">
       <h3>Kelembapan Tanah</h3>
-      <p><span id="soil">--</span> %</p>
+      <p><span id="soil" class="sensor-value">--</span> %</p>
     </div>
-    <div class="card">
+    <div class="sensor-card">
       <h3>Status Pompa</h3>
-      <p><span id="pumpStatus">🛑 OFF</span></p>
+      <p><span id="pumpStatus" class="sensor-value text-red-600">OFF 🛑</span></p>
     </div>
   </section>
 
-  <section class="control">
-    <h2>Kontrol Pompa</h2>
-    <p>Mode: <span id="mode">Manual</span></p>
-    <div class="buttons">
-      <button id="manualBtn" class="active">Manual</button>
-      <button id="autoBtn">Otomatis</button>
+  <!-- Kontrol Pompa -->
+  <section class="control-panel">
+    <h2 class="text-2xl font-semibold mb-3">Kontrol Pompa</h2>
+    <p class="mb-4">Mode saat ini: <span id="mode" class="font-bold text-green-700">Manual</span></p>
+
+    <div class="flex justify-center gap-4">
+      <button id="manualBtn" class="control-btn active">Manual</button>
+      <button id="autoBtn" class="control-btn">Otomatis</button>
     </div>
-    <div class="buttons">
-      <button id="pumpOnBtn">💧 Pompa ON</button>
-      <button id="pumpOffBtn">🛑 Pompa OFF</button>
+
+    <div class="flex justify-center gap-4 mt-4">
+      <button id="pumpOnBtn" class="action-btn bg-green-600 hover:bg-green-700">💧 Pompa ON</button>
+      <button id="pumpOffBtn" class="action-btn bg-red-600 hover:bg-red-700">🛑 Pompa OFF</button>
     </div>
   </section>
 
-  <section class="chart-section">
+  <!-- Grafik Sensor -->
+  <section class="charts-container">
+    <h2 class="text-2xl font-semibold mb-3 text-green-700">Grafik Sensor</h2>
     <canvas id="tempChart"></canvas>
-    <canvas id="humChart"></canvas>
-    <canvas id="soilChart"></canvas>
+    <canvas id="humChart" class="mt-6"></canvas>
+    <canvas id="soilChart" class="mt-6"></canvas>
   </section>
 
-  <footer>
-    <p>© 2025 SmartFarm v3 | MQTT via broker.emqx.io</p>
+  <!-- Footer -->
+  <footer class="bg-green-700 text-green-100 py-4 mt-10">
+    <p>© 2025 EcoSense SmartFarm | Powered by MQTT & EMQX</p>
   </footer>
 
   <script src="script.js"></script>
