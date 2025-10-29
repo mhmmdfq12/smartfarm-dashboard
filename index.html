@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Farming Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🌾 Smart Farming Dashboard</h1>
+    <p>Status koneksi: <span id="status">🔴 Terputus</span></p>
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <h3>Suhu</h3>
+      <p><span id="temperature">--</span> °C</p>
+    </div>
+    <div class="card">
+      <h3>Kelembapan Udara</h3>
+      <p><span id="humidity">--</span> %</p>
+    </div>
+  </section>
+
+  <section class="chart-section">
+    <canvas id="tempChart"></canvas>
+    <canvas id="humChart"></canvas>
+  </section>
+
+  <footer>
+    <p>© 2025 SmartFarm | Data real-time via MQTT (broker.emqx.io)</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
