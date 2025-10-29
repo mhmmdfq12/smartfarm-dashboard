@@ -1,96 +1,100 @@
-// MQTT broker EMQX (WebSocket)
+// Broker EMQX WebSocket
 const broker = "wss://broker.emqx.io:8084/mqtt";
 const clientId = "webClient_" + Math.random().toString(16).substr(2, 8);
 const options = {
-  clientId: clientId,
+  clientId,
   keepalive: 60,
   clean: true,
-  reconnectPeriod: 5000,
+  reconnectPeriod: 4000,
 };
 
-// Hubungkan ke broker
 const client = mqtt.connect(broker, options);
-const statusEl = document.getElementById("status");
 
-// Variabel tampilan
+// Elemen UI
+const statusEl = document.getElementById("status");
 const tempEl = document.getElementById("temperature");
 const humEl = document.getElementById("humidity");
+const soilEl = document.getElementById("soil");
+const modeEl = document.getElementById("mode");
 
-// Data untuk grafik
-const tempData = [];
-const humData = [];
+const manualBtn = document.getElementById("manualBtn");
+const autoBtn = document.getElementById("autoBtn");
+const pumpOnBtn = document.getElementById("pumpOnBtn");
+const pumpOffBtn = document.getElementById("pumpOffBtn");
+
+// Data chart
+const soilData = [];
 const timeLabels = [];
 
-// Inisialisasi Chart.js
-const tempChart = new Chart(document.getElementById("tempChart"), {
+const soilChart = new Chart(document.getElementById("soilChart"), {
   type: "line",
   data: {
     labels: timeLabels,
     datasets: [{
-      label: "Suhu (°C)",
-      data: tempData,
-      borderColor: "rgb(255, 99, 132)",
+      label: "Kelembapan Tanah (%)",
+      data: soilData,
+      borderColor: "rgb(46, 139, 87)",
       tension: 0.3
     }]
   },
-  options: { scales: { y: { beginAtZero: true } } }
+  options: { scales: { y: { beginAtZero: true, max: 100 } } }
 });
 
-const humChart = new Chart(document.getElementById("humChart"), {
-  type: "line",
-  data: {
-    labels: timeLabels,
-    datasets: [{
-      label: "Kelembapan (%)",
-      data: humData,
-      borderColor: "rgb(54, 162, 235)",
-      tension: 0.3
-    }]
-  },
-  options: { scales: { y: { beginAtZero: true } } }
-});
-
-// Ketika koneksi berhasil
+// MQTT Connection
 client.on("connect", () => {
   console.log("✅ Terhubung ke broker EMQX");
   statusEl.textContent = "🟢 Terhubung";
+
+  client.subscribe("smartfarm/soil");
   client.subscribe("smartfarm/dht22/temperature");
   client.subscribe("smartfarm/dht22/humidity");
+  client.subscribe("smartfarm/pump/status");
 });
 
-// Saat terputus
-client.on("error", (err) => {
+client.on("message", (topic, message) => {
+  const data = message.toString();
+
+  if (topic === "smartfarm/soil") {
+    const soil = parseFloat(data);
+    soilEl.textContent = soil.toFixed(1);
+    const time = new Date().toLocaleTimeString();
+    timeLabels.push(time);
+    soilData.push(soil);
+    if (soilData.length > 15) {
+      soilData.shift();
+      timeLabels.shift();
+    }
+    soilChart.update();
+  }
+
+  if (topic === "smartfarm/dht22/temperature") tempEl.textContent = data;
+  if (topic === "smartfarm/dht22/humidity") humEl.textContent = data;
+  if (topic === "smartfarm/pump/status") console.log("Pompa:", data);
+});
+
+client.on("error", err => {
   console.error("Koneksi gagal:", err);
-  statusEl.textContent = "🔴 Koneksi gagal";
+  statusEl.textContent = "🔴 Terputus";
 });
 
 client.on("reconnect", () => {
   statusEl.textContent = "🟠 Menghubungkan kembali...";
 });
 
-// Saat menerima data MQTT
-client.on("message", (topic, message) => {
-  const value = parseFloat(message.toString());
-  const time = new Date().toLocaleTimeString();
+// Fungsi kontrol
+manualBtn.onclick = () => {
+  modeEl.textContent = "Manual";
+  manualBtn.classList.add("active");
+  autoBtn.classList.remove("active");
+  client.publish("smartfarm/mode", "manual");
+};
 
-  if (topic === "smartfarm/dht22/temperature") {
-    tempEl.textContent = value.toFixed(1);
-    tempData.push(value);
-  }
+autoBtn.onclick = () => {
+  modeEl.textContent = "Otomatis";
+  autoBtn.classList.add("active");
+  manualBtn.classList.remove("active");
+  client.publish("smartfarm/mode", "auto");
+};
 
-  if (topic === "smartfarm/dht22/humidity") {
-    humEl.textContent = value.toFixed(1);
-    humData.push(value);
-  }
-
-  // Update waktu dan refresh chart
-  timeLabels.push(time);
-  if (timeLabels.length > 10) {
-    timeLabels.shift();
-    tempData.shift();
-    humData.shift();
-  }
-
-  tempChart.update();
-  humChart.update();
-});
+pumpOnBtn.onclick = () => client.publish("smartfarm/pump/control", "ON");
+pumpOffBtn.onclick = () => client.publish("smartfarm/pump/control", "OFF");
