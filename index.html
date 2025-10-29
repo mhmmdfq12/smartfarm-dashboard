@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Farming Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Farming Dashboard v2</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>🌾 Smart Farming Dashboard</h1>
+    <h1>🌾 Smart Farming Dashboard v2</h1>
     <p>Status koneksi: <span id="status">🔴 Terputus</span></p>
   </header>
 
@@ -23,15 +23,31 @@
       <h3>Kelembapan Udara</h3>
       <p><span id="humidity">--</span> %</p>
     </div>
+    <div class="card">
+      <h3>Kelembapan Tanah</h3>
+      <p><span id="soil">--</span> %</p>
+    </div>
+  </section>
+
+  <section class="control">
+    <h2>Kontrol Pompa</h2>
+    <p>Mode: <span id="mode">Manual</span></p>
+    <div class="buttons">
+      <button id="manualBtn" class="active">Manual</button>
+      <button id="autoBtn">Otomatis</button>
+    </div>
+    <div class="buttons">
+      <button id="pumpOnBtn">💧 Pompa ON</button>
+      <button id="pumpOffBtn">🛑 Pompa OFF</button>
+    </div>
   </section>
 
   <section class="chart-section">
-    <canvas id="tempChart"></canvas>
-    <canvas id="humChart"></canvas>
+    <canvas id="soilChart"></canvas>
   </section>
 
   <footer>
-    <p>© 2025 SmartFarm | Data real-time via MQTT (broker.emqx.io)</p>
+    <p>© 2025 SmartFarm v2 | MQTT via broker.emqx.io</p>
   </footer>
 
   <script src="script.js"></script>
