@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Farming Dashboard v2</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Farming Dashboard v3</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>🌾 Smart Farming Dashboard v2</h1>
+    <h1>🌾 Smart Farming Dashboard v3</h1>
     <p>Status koneksi: <span id="status">🔴 Terputus</span></p>
   </header>
 
   <section class="cards">
     <div class="card">
-      <h3>Suhu</h3>
+      <h3>Suhu Udara</h3>
       <p><span id="temperature">--</span> °C</p>
     </div>
     <div class="card">
@@ -26,6 +26,10 @@
     <div class="card">
       <h3>Kelembapan Tanah</h3>
       <p><span id="soil">--</span> %</p>
+    </div>
+    <div class="card">
+      <h3>Status Pompa</h3>
+      <p><span id="pumpStatus">🛑 OFF</span></p>
     </div>
   </section>
 
@@ -43,11 +47,13 @@
   </section>
 
   <section class="chart-section">
+    <canvas id="tempChart"></canvas>
+    <canvas id="humChart"></canvas>
     <canvas id="soilChart"></canvas>
   </section>
 
   <footer>
-    <p>© 2025 SmartFarm v2 | MQTT via broker.emqx.io</p>
+    <p>© 2025 SmartFarm v3 | MQTT via broker.emqx.io</p>
   </footer>
 
   <script src="script.js"></script>
